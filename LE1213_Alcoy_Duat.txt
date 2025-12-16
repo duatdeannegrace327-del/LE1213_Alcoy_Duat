@@ -7,7 +7,7 @@ int main()
     int studentAge;
     char studentName[30];
     char studentCourse[30];
-    
+    char readingDatabase[30];
 
     file = fopen("student_records.txt", "w");
 
@@ -20,6 +20,8 @@ int main()
     printf("How many students do you want to record?: ");
     scanf("%d", &studentNumber);
     getchar();
+
+    fprintf(file, "\nReading Student Database: \n");
 
     for(int i=0; i<studentNumber; i++)
     {
@@ -34,30 +36,32 @@ int main()
         printf("Enter Course: ");
         fgets(studentCourse, sizeof(studentCourse), stdin);
 
-        fprintf(file, "Student: %d\n", i + 1);
-        fprintf(file, "Name: %s\n", studentName);
+        fprintf(file, "\nStudent %d\n", i + 1);
+        fprintf(file, "Name: %s", studentName);
         fprintf(file, "Age: %d\n", studentAge);
         fprintf(file, "Course: %s\n", studentCourse);
-        fprintf(file, "\n------------------------------\n");
+        fprintf(file, "------------------------------\n");
     }
-    
+
     fclose(file);
 
+    printf("\nStudent database successfully saved to file\n");
+    printf("\n------------------------------\n");
+
     file = fopen("student_records.txt", "r");
-    if(file == NULL){
-        printf("Error. File not found\n");
+
+    if(file == NULL)
+    {
+        printf("Error. File not found");
         return 1;
     }
 
-    else{
-        printf("\nReading Student Database\n");
-        while(fgets(studentName, sizeof(studentName), file)){
-            printf("%s", studentName);
-        }
+    while (fgets(readingDatabase, sizeof(readingDatabase), file))
+    {
+        printf("%s", readingDatabase);
+    }
 
     fclose(file);
 
     return 0;
-    }
-
 }
